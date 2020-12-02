@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>VUE Bitcoin</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <nav>
+        <h1>Bitcoin price Index</h1>
+    </nav>
+    <div id="app">
+    
+    <div class="box-circle">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        
+        <circle cx="4" cy="4" r="25"
+        style="
+        fill: #ff01dd; fill-opacity: 0.5; " />
+
+    
+        <circle cx="65" cy="50" r="20"
+        style="
+        fill: #05d10f;
+        fill-opacity: 0.5"/>
+
+        <circle cx="45" cy="15" r="10"
+        style="
+        fill: #00ffc8;
+        fill-opacity: 0.5"/>  
+
+        <circle cx="85" cy="10" r="15"
+        style="
+        fill: #c404ff;
+        fill-opacity: 0.5"/>  
+
+        <circle cx="30" cy="35" r="7"
+        style="
+        fill: #0400ff;
+        fill-opacity: 0.5"/> 
+
+        
+        
+    </svg>
+</div>
+   
+
+    <div class="glass">
+        
+
+        <div v-for='currency in info'
+            class="currency">
+            <p>{{ currency.description }} :  </p>
+            <span class="lighten">{{ currency.rate_float | currencydecimal }} <span v-html="currency.symbol"></span>   
+            </span>
+        </div>
+    </div>
+    <div v-for='time in infoTimes'>
+        <p>{{ time.updated }}</p>
+    </div>
+</div>
+
+<script>
+
+    new Vue({
+        el: '#app',
+        data () {
+          return {
+            info: null,
+            infoTimes:null
+          }
+        },
+        mounted () {
+         axios
+            .get('https://api.coindesk.com/v1/bpi/currentprice.json')
+            .then(response => (this.info = response.data.bpi)) ;
+        
+            axios
+            .get('https://api.coindesk.com/v1/bpi/currentprice.json')
+            .then(response => (this.infoTimes = response.data.time))
+        },
+        filters: {
+            currencydecimal (value) {
+              return value.toFixed(2)
+            }
+          },
+      })
+
+</script>
+
+
+</body>
+</html>
