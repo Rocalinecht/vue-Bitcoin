@@ -16,6 +16,9 @@
 <body>
     <nav>
         <h1>Bitcoin price Index</h1>
+        <div class="make"> 
+            <p>«Powered by CoinDesk »</p>
+        </div>
     </nav>
     <div id="app"> 
         <div class="box-circle">
@@ -47,36 +50,26 @@
         </div>
     </div>
 
-    <footer>
-        <p>«Powered by CoinDesk »</p>
-    </footer>
+    <script>
 
-<script>
-
-    {# new Vue({
-        el: '#app',
-        data () {
-          return {
-            info: null,
-            infoTimes:null
-          }
-        },
-        mounted () {
-         axios
-            .get('https://api.coindesk.com/v1/bpi/currentprice.json')
-            .then(response => (this.info = response.data.bpi)) ;
-        
-            axios
-            .get('https://api.coindesk.com/v1/bpi/currentprice.json')
-            .then(response => (this.infoTimes = response.data.time))
-        },
-        filters: {
-            currencydecimal (value) {
-              return value.toFixed(2)
+        new Vue({
+            el: '#app',
+            data () {
+            return {
+                info: null,
             }
-          },
-      }) #}
-
-</script>
+            },
+            mounted () {
+            axios
+                .get('https://api.coindesk.com/v1/bpi/currentprice.json')
+                .then(response => (this.info = response.data.bpi)) ;
+            },
+            filters: {
+                currencydecimal (value) {
+                return value.toFixed(2)
+                }
+            },
+        }) 
+    </script>
 </body>
 </html>
